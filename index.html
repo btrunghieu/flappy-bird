@@ -1,6 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Quiz - Thử tài tinh mắt</title>
@@ -13,7 +15,7 @@
         .pixel-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.8); }
         .pixel-box { border: 4px solid black; }
         
-        /* Animation Definitions */
+        /* ------------------------------------------------------------------------------------------- */
         @keyframes float-cloud { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
         .cloud-anim { animation: float-cloud 20s linear infinite; }
         .cloud-anim-slow { animation: float-cloud 35s linear infinite; }
@@ -24,7 +26,7 @@
 
     <script>
         const CONFIG = {
-            TARGET_URL: "https://www.google.com" // Link đích sau khi qua mặt Safe Page
+            TARGET_URL: "https://www.google.com" // Link đích
         };
     </script>
 
@@ -38,16 +40,7 @@
       ttq.page();
     }(window, document, 'ttq');
     </script>
-    <script>
-        function trackEvent(name, params = {}) {
-            if (typeof window.ttq !== 'undefined') {
-                console.log('Pixel Fired:', name, params);
-                // Pixel sẽ chỉ bắn nếu bạn đã cài đặt đúng sự kiện
-                window.ttq.track(name, params);
-            }
-        }
-    </script>
-</head>
+    </head>
 <body class="bg-sky-300 min-h-screen overflow-x-hidden relative">
 
     <div id="app-container">
@@ -70,9 +63,11 @@
                     <div class="bg-white p-4 border-2 border-black mb-6">
                         <div class="flex justify-center gap-4">
                             <button onclick="handleVerify(false)" class="w-20 h-20 bg-blue-400 border-4 border-black hover:bg-blue-300 active:translate-y-1 transition-all flex items-center justify-center text-4xl">🐟</button>
-                            <button onclick="handleVerify(true)" class="w-20 h-20 bg-yellow-400 border-4 border-black hover:bg-yellow-300 active:translate-y-1 transition-all flex items-center justify-center animate-pulse">
+                            
+                            <button onclick="handleVerify(true)" class="w-20 h-20 bg-yellow-400 border-4 border-black hover:bg-yellow-300 active:translate-y-1 transition-all flex items-center justify-center animate-pulse btn-correct">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-black"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>
                             </button>
+                            
                             <button onclick="handleVerify(false)" class="w-20 h-20 bg-orange-400 border-4 border-black hover:bg-orange-300 active:translate-y-1 transition-all flex items-center justify-center text-4xl">🐱</button>
                         </div>
                     </div>
@@ -93,11 +88,7 @@
         
         function handleVerify(isCorrect) {
             if (isCorrect) {
-                // 1. Track Pixel: Người dùng thật đã qua bước lọc
-                // Bạn có thể tự custom lại tên event ở đây nếu muốn
-                trackEvent('ViewContent', { content_name: 'Passed_Bot_Check' });
-
-                // 2. Inject Money Page Content
+                // Đã xóa trackEvent, chỉ hiển thị Money Page
                 renderMoneyPage();
             } else {
                 // Báo lỗi
@@ -107,16 +98,8 @@
             }
         }
 
-        function handleConversion(btnName) {
-            // Track sự kiện Đăng ký ngay khi bấm nút
-            trackEvent('CompleteRegistration', {
-                content_name: btnName,
-                value: 50000,
-                currency: 'VND'
-            });
-            trackEvent('InitiateCheckout', { content_name: btnName });
-
-            // Mở link
+        function handleConversion() {
+            // Đã xóa trackEvent, chỉ chuyển link
             window.location.href = CONFIG.TARGET_URL;
         }
 
@@ -124,10 +107,8 @@
         function renderMoneyPage() {
             const container = document.getElementById('app-container');
             
-            // Thay đổi Background sang màu tối
             document.body.className = "bg-gray-900 min-h-screen relative font-mono pb-20";
 
-            // HTML của trang Money Page
             const moneyPageHTML = `
                 <div class="absolute inset-0 overflow-hidden pointer-events-none z-0" id="coin-rain"></div>
 
@@ -153,12 +134,12 @@
                             </div>
                             
                             <div class="w-full space-y-4 relative z-10">
-                                <button onclick="handleConversion('Button_Code100k')" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black border-b-8 border-r-4 border-yellow-700 active:border-0 active:translate-y-2 py-4 text-3xl font-bold pixel-text shadow-xl flex items-center justify-center gap-3">
+                                <button onclick="handleConversion()" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black border-b-8 border-r-4 border-yellow-700 active:border-0 active:translate-y-2 py-4 text-3xl font-bold pixel-text shadow-xl flex items-center justify-center gap-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                                     NHẬN CODE NGAY
                                 </button>
                                 
-                                <button onclick="handleConversion('Button_TaiApp')" class="w-full bg-blue-600 hover:bg-blue-500 text-white border-b-8 border-r-4 border-blue-900 active:border-0 active:translate-y-2 py-3 text-2xl font-bold pixel-text shadow-xl flex items-center justify-center gap-3">
+                                <button onclick="handleConversion()" class="w-full bg-blue-600 hover:bg-blue-500 text-white border-b-8 border-r-4 border-blue-900 active:border-0 active:translate-y-2 py-3 text-2xl font-bold pixel-text shadow-xl flex items-center justify-center gap-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                                     TẢI APP IOS/APK
                                 </button>
@@ -188,7 +169,6 @@
             startCoinRain(); 
         }
 
-        // --- HIỆU ỨNG TIỀN RƠI (JS THUẦN) ---
         function startCoinRain() {
             const rainContainer = document.getElementById('coin-rain');
             if(!rainContainer) return;
@@ -201,7 +181,6 @@
                 coin.style.fontSize = (Math.random() * 20 + 20) + 'px';
                 
                 rainContainer.appendChild(coin);
-
                 setTimeout(() => { coin.remove(); }, 3000);
             }, 300);
         }
