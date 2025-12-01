@@ -30,7 +30,7 @@
       
       // QUAN TRỌNG: Đây là sự kiện xác định người dùng đã qua bước bot
       ttq.page(); 
-      ttq.track('ViewContent'); // Bắn thêm sự kiện ViewContent để tối ưu
+      ttq.track('ViewContent', {     content_id: 'GAME_NOHU_01',  // Mã định danh giả lập (để TikTok biết là xem cái gì)     content_type: 'product',     // Loại nội dung     content_name: 'Tai Game No Hu', // Tên sản phẩm     value: 10000,                // Giá trị quy đổi giả định (để máy học ưu tiên user chất lượng)     currency: 'VND'              // Đơn vị tiền tệ }); // Bắn thêm sự kiện ViewContent để tối ưu
     }(window, document, 'ttq');
     </script>
     </head>
