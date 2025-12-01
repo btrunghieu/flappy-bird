@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Quiz - Thử tài tinh mắt</title>
-    <!-- Tailwind CSS (Chạy trực tiếp) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Pixel -->
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     
     <style>
@@ -23,41 +21,28 @@
         @keyframes fall { 0% { top: -50px; opacity: 1; transform: rotate(0deg); } 100% { top: 100vh; opacity: 0; transform: rotate(360deg); } }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
+
     <script>
         const CONFIG = {
-            PIXEL_ID: 'D4ML0GRC77U1VUV8TRU0', 
-            TARGET_URL: "https://www.google.com" 
+            TARGET_URL: "https://www.google.com" // Link đích sau khi qua mặt Safe Page
         };
+    </script>
 
-        // Khởi tạo Pixel
-        !function (w, d, t) {
-            w.ttq = w.ttq || [];
-            w.ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie"];
-            w.ttq.setAndDefer = function (t, e) {
-                t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) }
-            };
-            for (var i = 0; i < w.ttq.methods.length; i++) w.ttq.setAndDefer(w.ttq, w.ttq.methods[i]);
-            w.ttq.instance = function (t) {
-                for (var e = w.ttq.methods[i = 0]; i < w.ttq.methods.length; i++) w.ttq.setAndDefer(t, w.ttq.methods[i]);
-                return t
-            };
-            w.ttq.load = function (e, n) {
-                var i = "https://analytics.tiktok.com/i18n/pixel/events.js";
-                w.ttq._i = w.ttq._i || {}, w.ttq._i[e] = [], w.ttq._i[e]._u = i, w.ttq._t = w.ttq._t || {}, w.ttq._t[e] = +new Date, w.ttq._o = w.ttq._o || {}, w.ttq._o[e] = n || {};
-                var o = document.createElement("script");
-                o.type = "text/javascript", o.async = !0, o.src = i + "?sdkid=" + e + "&lib=" + t;
-                var a = document.getElementsByTagName("script")[0];
-                a.parentNode.insertBefore(o, a)
-            };
-
-            w.ttq.load(CONFIG.PIXEL_ID);
-            w.ttq.page();
-        }(window, document, 'ttq');
-
-        // Hàm hỗ trợ Track sự kiện
+    <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    
+      ttq.load('D4ML0GRC77U1VUV8TRU0');
+      ttq.page();
+    }(window, document, 'ttq');
+    </script>
+    <script>
         function trackEvent(name, params = {}) {
-            if (window.ttq) {
+            if (typeof window.ttq !== 'undefined') {
                 console.log('Pixel Fired:', name, params);
+                // Pixel sẽ chỉ bắn nếu bạn đã cài đặt đúng sự kiện
                 window.ttq.track(name, params);
             }
         }
@@ -65,15 +50,11 @@
 </head>
 <body class="bg-sky-300 min-h-screen overflow-x-hidden relative">
 
-    <!-- CONTAINER CHÍNH -->
     <div id="app-container">
-        <!-- Nội dung Safe Page sẽ hiển thị mặc định -->
-        <!-- Background Elements -->
         <div class="absolute top-10 left-0 w-32 h-16 bg-white opacity-80 rounded-full cloud-anim blur-sm"></div>
         <div class="absolute top-40 left-0 w-48 h-20 bg-white opacity-60 rounded-full cloud-anim-slow blur-sm delay-1000"></div>
         <div class="absolute bottom-0 w-full h-16 bg-[#ded895] border-t-4 border-black z-0"></div>
 
-        <!-- Safe Page Content -->
         <div id="safe-page" class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
             <div class="mb-8 animate-[bounce-slow_2s_infinite]">
                 <h1 class="text-6xl md:text-8xl font-bold text-orange-500 pixel-text drop-shadow-[4px_4px_0_rgba(0,0,0,1)] text-center leading-none">
@@ -88,14 +69,10 @@
                     
                     <div class="bg-white p-4 border-2 border-black mb-6">
                         <div class="flex justify-center gap-4">
-                            <!-- Sai -->
                             <button onclick="handleVerify(false)" class="w-20 h-20 bg-blue-400 border-4 border-black hover:bg-blue-300 active:translate-y-1 transition-all flex items-center justify-center text-4xl">🐟</button>
-                            <!-- Đúng -->
                             <button onclick="handleVerify(true)" class="w-20 h-20 bg-yellow-400 border-4 border-black hover:bg-yellow-300 active:translate-y-1 transition-all flex items-center justify-center animate-pulse">
-                                <!-- Bird Icon SVG -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-black"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg>
                             </button>
-                            <!-- Sai -->
                             <button onclick="handleVerify(false)" class="w-20 h-20 bg-orange-400 border-4 border-black hover:bg-orange-300 active:translate-y-1 transition-all flex items-center justify-center text-4xl">🐱</button>
                         </div>
                     </div>
@@ -111,16 +88,16 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         // --- LOGIC XỬ LÝ ---
         
         function handleVerify(isCorrect) {
             if (isCorrect) {
                 // 1. Track Pixel: Người dùng thật đã qua bước lọc
+                // Bạn có thể tự custom lại tên event ở đây nếu muốn
                 trackEvent('ViewContent', { content_name: 'Passed_Bot_Check' });
 
-                // 2. Inject Money Page Content (Kỹ thuật Inject giúp ẩn nội dung khỏi Bot)
+                // 2. Inject Money Page Content
                 renderMoneyPage();
             } else {
                 // Báo lỗi
@@ -144,7 +121,6 @@
         }
 
         // --- HÀM RENDER TRANG 2 (MONEY PAGE) ---
-        // Nội dung HTML của trang 2 nằm trong chuỗi JS này, Bot HTML thuần túy sẽ không đọc được
         function renderMoneyPage() {
             const container = document.getElementById('app-container');
             
@@ -153,10 +129,8 @@
 
             // HTML của trang Money Page
             const moneyPageHTML = `
-                <!-- Hiệu ứng tiền rơi giả lập bằng CSS thuần -->
                 <div class="absolute inset-0 overflow-hidden pointer-events-none z-0" id="coin-rain"></div>
 
-                <!-- Header -->
                 <div class="bg-black text-yellow-400 p-3 flex justify-between items-center border-b-2 border-yellow-600 sticky top-0 z-50">
                     <span class="text-2xl font-bold pixel-text">🔥 NỔ HŨ CLUB</span>
                     <span class="bg-red-600 text-white text-sm px-2 py-1 rounded animate-pulse">LIVE: 52K</span>
@@ -170,25 +144,20 @@
                         Chỉ dành cho tài khoản đăng ký mới
                     </p>
 
-                    <!-- Offer Box -->
                     <div class="bg-gradient-to-br from-red-600 to-red-900 p-1 w-full max-w-lg border-4 border-yellow-400 shadow-[0_0_50px_rgba(255,0,0,0.5)] transform hover:scale-105 transition-transform duration-300">
                         <div class="bg-red-800 p-6 flex flex-col items-center text-center relative overflow-hidden">
-                            <!-- Pattern giả -->
                             <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 10px 10px;"></div>
                             
-                            <!-- Icon Gift SVG -->
                             <div class="mb-4 animate-bounce relative z-10">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
                             </div>
                             
                             <div class="w-full space-y-4 relative z-10">
-                                <!-- Nút 1 -->
                                 <button onclick="handleConversion('Button_Code100k')" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black border-b-8 border-r-4 border-yellow-700 active:border-0 active:translate-y-2 py-4 text-3xl font-bold pixel-text shadow-xl flex items-center justify-center gap-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                                     NHẬN CODE NGAY
                                 </button>
                                 
-                                <!-- Nút 2 -->
                                 <button onclick="handleConversion('Button_TaiApp')" class="w-full bg-blue-600 hover:bg-blue-500 text-white border-b-8 border-r-4 border-blue-900 active:border-0 active:translate-y-2 py-3 text-2xl font-bold pixel-text shadow-xl flex items-center justify-center gap-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                                     TẢI APP IOS/APK
@@ -202,13 +171,11 @@
                         </div>
                     </div>
 
-                    <!-- Footer Info -->
                     <div class="mt-12 text-center text-gray-500 text-xs pixel-text">
                         <p>CSKH 24/7 - Hỗ trợ Telegram @bosskhanh666</p>
                         <p class="mt-2">Trò chơi giải trí, vui lòng chơi có trách nhiệm (18+)</p>
                     </div>
 
-                    <!-- Marquee Footer -->
                     <div class="fixed bottom-0 left-0 w-full bg-black text-green-400 p-2 overflow-hidden z-50 border-t-2 border-green-600">
                         <div class="whitespace-nowrap animate-[marquee_10s_linear_infinite] pixel-text text-xl">
                              ★ CHÚC MỪNG: User098xx VỪA NỔ HŨ 50.000.000Đ ★ CHÚC MỪNG: TuanAnh99 VỪA RÚT 10.000.000Đ ★ SỰ KIỆN X3 HŨ VÀNG ★
@@ -218,7 +185,7 @@
             `;
 
             container.innerHTML = moneyPageHTML;
-            startCoinRain(); // Bắt đầu hiệu ứng tiền rơi
+            startCoinRain(); 
         }
 
         // --- HIỆU ỨNG TIỀN RƠI (JS THUẦN) ---
@@ -228,14 +195,13 @@
             
             setInterval(() => {
                 const coin = document.createElement('div');
-                coin.innerHTML = '🪙'; // Icon tiền
+                coin.innerHTML = '🪙'; 
                 coin.className = 'absolute text-yellow-500 animate-[fall_3s_linear_forwards]';
                 coin.style.left = Math.random() * 95 + '%';
                 coin.style.fontSize = (Math.random() * 20 + 20) + 'px';
                 
                 rainContainer.appendChild(coin);
 
-                // Tự xóa sau khi rơi xong để nhẹ máy
                 setTimeout(() => { coin.remove(); }, 3000);
             }, 300);
         }
